@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>어디냥 | 상태표시화면</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    
 </head>
 
 <body>
@@ -24,7 +23,6 @@
         <h1 class="title">나의 프로필</h1>
         <!-- 나의 프로필 영역 -->
         <div>
-            <!-- 스크롤 다운 비활성화 상태 -->
             <div class="columns is-mobile" id="user_info">
                 <!-- 프로필 이미지 -->
                 <div class="column">
@@ -52,29 +50,9 @@
             </div>
 
             <!-- 나의 프로필 변경 페이지를 뜨게 하는 버튼 -->
-            <button class="button is-primary">
+            <button class="button is-primary js-modal-trigger" data-target="update_user_profile">
                 나의 프로필 변경하기
             </button>
-
-            <!-- 나의 프로필 변경 버튼을 누를 때 나타나는 화면 -->
-            
-
-            <!-- 스크롤 다운 버튼 -->
-
-            <!-- 스르콜 다운 활성화 상태 -->
-
-            <!-- 프로필 이미지 -->
-            <!-- 이름 -->
-            <!-- 상태 -->
-
-            <!-- 한줄 구분 -->
-
-            <!-- 표시이름 + 표시이름 변경 박스 -->
-
-            <!-- 현재위치 + 현재위치 선택 박스 -->
-
-            <!-- 랜덤고양이 + 랜던고양이 뽑기 버튼 -->
-            <!-- 스크롤 다운 버튼 -->
         </div>
 
     </section>
@@ -195,22 +173,118 @@
 
 
     <!-- 팝업  -->
-    <div class="modal">
+    <div class="modal" id="update_user_profile">
         <div class="modal-background"></div>
         <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Modal title</p>
-            <button class="delete" aria-label="close"></button>
-          </header>
-          <section class="modal-card-body">
-            <!-- 프로필 수정 입력 -->
-          </section>
-          <footer class="modal-card-foot">
-            <button class="button is-success">Save changes</button>
-            <button class="button">Cancel</button>
-          </footer>
+            <header class="modal-card-head">
+                <p class="modal-card-title">사용자 프로필 수정 화면</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="columns is-mobile" id="user_info">
+                    <!-- 프로필 이미지 -->
+                    <div class="column">
+                        <figure class="image is-96x96">
+                            <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png">
+                        </figure>
+                    </div>
+                    <div class="column is-two-thirds tags are-normal">
+                        <!-- 이름 -->
+                        <div class="block">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">이름</span>
+                                <span class="tag is-info">김고양</span>
+                            </div>
+                        </div>
+
+                        <!-- 상태 -->
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">위치</span>
+                                <span class="tag is-info">강의실</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div>
+                    <!-- 표시이름 + 표시이름 변경 박스 -->
+
+
+                    <!-- 현재위치 + 현재위치 선택 박스 -->
+                    <div>
+                        <span class="tag is-info">나의 위치를 알려줘!</span>
+                        <div class="select">
+                            <select>
+                                <option>강의실</option>
+                                <option>라운지</option>
+                                <option>기숙사</option>
+                                <option>식당</option>
+                                <option>세탁실</option>
+                                <option>외출중</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <!-- 랜덤고양이 + 랜던고양이 뽑기 버튼 -->
+                        <span class="tag is-info">프로필 바꾸기</span>
+                        <button class="button is-success">고양이를 바꿔라!</button>
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-success">수정하기</button>
+                <button class="button">취소하기</button>
+            </footer>
         </div>
-      </div>
+    </div>
+
+
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Functions to open and close a modal
+        function openModal($el) {
+            $el.classList.add('is-active');
+        }
+
+        function closeModal($el) {
+            $el.classList.remove('is-active');
+        }
+
+        function closeAllModals() {
+            (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+                closeModal($modal);
+            });
+        }
+
+        // Add a click event on buttons to open a specific modal
+        (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+            const modal = $trigger.dataset.target;
+            const $target = document.getElementById(modal);
+
+            $trigger.addEventListener('click', () => {
+                openModal($target);
+            });
+        });
+
+        // Add a click event on various child elements to close the parent modal
+        (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+            const $target = $close.closest('.modal');
+
+            $close.addEventListener('click', () => {
+                closeModal($target);
+            });
+        });
+
+        // Add a keyboard event to close all modals
+        document.addEventListener('keydown', (event) => {
+            if (event.key === "Escape") {
+                closeAllModals();
+            }
+        });
+    });
+</script>
 
 </html>
