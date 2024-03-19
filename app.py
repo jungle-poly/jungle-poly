@@ -1,10 +1,19 @@
 from flask import Flask, render_template, jsonify, request
+from flask_jwt_extended import*
 import requests
 import re
 from pymongo import MongoClient, DESCENDING
-from bson import ObjectId
+
+#todo: 리프레쉬 토큰 여력이 되면 구현
 
 app = Flask(__name__)
+
+app.config.update(
+    DEBUG = True,
+    JWT_SECRET_KEY = "HIII",
+)
+
+jwt = JWTManager(app)
 
 client = MongoClient('localhost', 27017)
 db = client.meow
@@ -12,8 +21,30 @@ db = client.meow
 # 인덱스 페이지
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('main.html')
 
+# 로그인
+@app.route("/login",methods=['POST'])
+def login_proc():
+    user_id = request.form["id"]
+    user_pw = request.form["pw"]
+    
+    user_data = db.student.find_one({'id': user_id}, {'pw': 1})
+
+    if(user_pw== user_data['pw']):
+        #todo: 조금 더 보안을 강화하고 싶다면 user_id를 단방향으로 암호화해서 identity 설정
+        access_token = create_access_token(identity=user_id,expires_delta=False,additional_claims={"id":user_id})
+        response = jsonify(
+            status = "success",
+            data = access_token
+        )
+        return response
+    else : 
+        return jsonify(
+            status = "fail",            
+            message = "존재하지 않는 아이디 혹은 비밀번호 오류"
+        )
+    
 # 회원가입 폼 조회
 @app.route('/signup/form', methods=['GET'])
 def show_signup_form():
@@ -46,7 +77,7 @@ def signup():
     }
 
     if (validate_student_info(studentInfo) == False):
-        return jsonify({'status': 'failure', 'message': '유효성 검사 실패. 입력하신 정보를 다시 확인해주세요'})        
+        return jsonify({'status': 'fail', 'message': '유효성 검사 실패. 입력하신 정보를 다시 확인해주세요'})        
 
     db.student.insert_one(studentInfo)
 
@@ -54,11 +85,11 @@ def signup():
 
 # 내 상태 변경
 @app.route('/state/update', methods=['POST'])
-# tood: jwt 모듈 적용 필요
+@jwt_required(optional=True)
 def update_state():
-    # todo: request.form이 아닌 jwt 토큰에서 student_id를 파싱해야 함
-    # student_id = request.args.get('student_id') 
-    student_id = '65f94b26286de7a20f391952'
+    current_user = get_jwt_identity()
+    if not current_user:
+        return jsonify({'status':'fail', 'message': '토큰값이 비어있음'})
 
     location = request.form['location']
     cat_image_url = request.form['catImageUrl']
@@ -70,12 +101,13 @@ def update_state():
     if (cat_image_url):
         update_data['cat_image_url'] = cat_image_url
         
-    db.student.update_one({'_id': ObjectId(student_id)}, {'$set': update_data})
+    db.student.update_one({'id': current_user}, {'$set': update_data})
     
     return jsonify({'status': 'success', 'message': '업데이트에 성공하였습니다.'})
 
 # 전체 수강생 상태 조회
 @app.route('/state/list', methods=['GET'])
+@jwt_required()
 def show_student_states():
     # my_id = request.args.get('student_id') # todo: request.form이 아닌 jwt 토큰에서 student_id를 파싱해야 함
     current_user_id = 'crafton1234'
@@ -83,8 +115,7 @@ def show_student_states():
     students = list(db.student.find({}, {'_id': 0, 'pw': 0}))
 
     # 내 정보 
-    my_profile = next((item for item in students if item['id'] == current_user_id), None)
-    print('마프프 -> ', my_profile)
+    my_profile = next((item for item in students if item['id'] == current_user_id), None)    
 
     # 다른 학생 정보
     other_students = [item for item in students if item['id'] != current_user_id]
@@ -138,5 +169,16 @@ def validate_student_info(student):
     
     return True
 
+# 만료된 토큰 에러 콜백
+@jwt.expired_token_loader
+def expired_token_callback(jwt_header, jwt_payload):
+    return jsonify({'status': 'fail', 'message': '토큰이 만료되었습니다.'}), 401
+
+# 유효하지 않은 토큰 에러 콜백 
+@jwt.invalid_token_loader
+def invalid_token_callback(error_string):
+    return jsonify({'status': 'fail', 'message': '유효하지 않은 토큰입니다.', 'error': error_string}), 422
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
+
