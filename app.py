@@ -107,18 +107,19 @@ def update_state():
 
 # 전체 수강생 상태 조회
 @app.route('/state/list', methods=['GET'])
-@jwt_required()
+@jwt_required(optional=True)
 def show_student_states():
-    # my_id = request.args.get('student_id') # todo: request.form이 아닌 jwt 토큰에서 student_id를 파싱해야 함
-    current_user_id = 'crafton1234'
+    current_user = get_jwt_identity()
+    if not current_user:
+        return jsonify({'status':'fail', 'message': '토큰값이 비어있음'})
 
     students = list(db.student.find({}, {'_id': 0, 'pw': 0}))
 
     # 내 정보 
-    my_profile = next((item for item in students if item['id'] == current_user_id), None)    
+    my_profile = next((item for item in students if item['id'] == current_user), None)    
 
     # 다른 학생 정보
-    other_students = [item for item in students if item['id'] != current_user_id]
+    other_students = [item for item in students if item['id'] != current_user]
 
     data = {
         'my_profile': my_profile,
@@ -129,12 +130,14 @@ def show_student_states():
 
 # 수강생 최신 상태정보 조회
 @app.route('/state/others/renew', methods=['GET'])
+@jwt_required(optional=True)
 def show_recent_states():
-    # student_id = request.args.get('student_id') # todo: request.form이 아닌 jwt 토큰에서 student_id를 파싱해야 함
-    current_user_id = 'crafton1234'
+    current_user = get_jwt_identity()
+    if not current_user:
+        return jsonify({'status':'fail', 'message': '토큰값이 비어있음'})
 
     # todo: 정렬조건 추가해야 함
-    other_students = db.student.find({'id': {"$ne": current_user_id}}, {'_id': 0, 'pw': 0, 'id': 0})
+    other_students = db.student.find({'id': {"$ne": current_user}}, {'_id': 0, 'pw': 0, 'id': 0})
 
     return jsonify({'status': 'success', 'data': list(other_students)})
 
@@ -181,4 +184,3 @@ def invalid_token_callback(error_string):
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-
