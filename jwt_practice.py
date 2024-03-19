@@ -35,14 +35,7 @@ def login_page():
 def login_proc():
     user_id = request.form["id"]
     user_pw = request.form["pw"]
-    access_token = create_access_token(identity=user_id,expires_delta=False)
-
-    application.logger.debug('Request Headers: %s', request.headers)
-    application.logger.debug('Request Body: %s', request.get_data())
-
-    print(type(access_token))
-    # 응답 로깅
-    application.logger.debug('Response: %s', access_token)
+    access_token = create_access_token(identity=user_id,expires_delta=False,additional_claims={"id":user_id})
 
     if(user_id == admin_id and user_pw==admin_pw):
         response = jsonify(
