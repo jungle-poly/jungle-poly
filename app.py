@@ -15,7 +15,7 @@ app.config.update(
 
 jwt = JWTManager(app)
 
-client = MongoClient('localhost', 27017)
+client = MongoClient('mongodb://test:test@52.79.113.253', 27017)
 db = client.meow
 
 # 인덱스 페이지
