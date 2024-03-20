@@ -132,17 +132,7 @@
     function logout() {
         // 로컬 스토리지에서 JWT 삭제
         localStorage.removeItem('access_token');
-
-
-        // 선택적: 서버에 로그아웃을 알리는 요청을 보낼 수 있음
-        $.ajax({
-            url: '/logout',
-            type: 'POST', // 서버 측 설정에 따라 GET도 가능
-            success: function (response) {
-                // 로그아웃 처리 후, 로그인 페이지로 리다이렉션
-                window.location.href = '/';
-            }
-        });
+        window.location.href = '/';
     }
 
 </script>

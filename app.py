@@ -227,10 +227,6 @@ def expired_token_callback(jwt_header, jwt_payload):
 def invalid_token_callback(error_string):
     return jsonify({'status': 'fail', 'message': '유효하지 않은 토큰입니다.', 'error': error_string}), 403
 
-#로그아웃
-@app.route('/logout', methods=['POST'])
-def logout():
-    return jsonify({'message': 'Logged out successfully'}), 200
 
 if __name__ == '__main__':
     # app.run('0.0.0.0', port=5000, debug=True)
