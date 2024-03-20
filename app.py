@@ -14,6 +14,11 @@ app.config.update(
     JWT_SECRET_KEY = "HIII", #todo 키값은 외부로 노출하면 안 됨.
 )
 
+# Jinja 연습
+@app.route("/tmpl")
+def t():
+    return render_template('base.html', title="Title")
+
 jwt = JWTManager(app)
 
 url = conf.url
@@ -191,4 +196,4 @@ def invalid_token_callback(error_string):
     return jsonify({'status': 'fail', 'message': '유효하지 않은 토큰입니다.', 'error': error_string}), 422
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5001, debug=True)
