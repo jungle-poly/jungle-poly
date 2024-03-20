@@ -4,6 +4,7 @@ import requests
 import re
 from pymongo import MongoClient, DESCENDING
 import conf 
+from flask import redirect,url_for
 
 #todo: 리프레쉬 토큰 여력이 되면 구현
 
@@ -42,11 +43,11 @@ def login_proc():
     if(user_pw== user_data['pw']):
         #todo: 조금 더 보안을 강화하고 싶다면 user_id를 단방향으로 암호화해서 identity 설정
         access_token = create_access_token(identity=user_id,expires_delta=False,additional_claims={"id":user_id})
-        response = jsonify(
+        
+        return jsonify(
             status = "success",
             data = access_token
         )
-        return response
     else : 
         return jsonify(
             status = "fail",            
@@ -113,10 +114,15 @@ def update_state():
     
     return jsonify({'status': 'success', 'message': '업데이트에 성공하였습니다.'})
 
+@app.route('/state', methods=['GET'])
+def show_student_page():
+    print('렌더링')
+    return render_template('show_profile.html')
+
 # 전체 수강생 상태 조회
 @app.route('/state/list', methods=['GET'])
 @jwt_required(optional=True)
-def show_student_states():
+def get_student_states():
     current_user = get_jwt_identity()
     if not current_user:
         return jsonify({'status':'fail', 'message': '토큰값이 비어있음'})

@@ -26,7 +26,8 @@
           data: {"id":id,"pw":pw},
           success: function(response){
               if(response["status"]=="success"){
-                  window.location.replace("/state/list");
+                  localStorage.setItem("access_token",response["data"])
+                  location.href = "/state"
               }
               else{
                   alert("로그인 실패");
