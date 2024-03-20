@@ -6,6 +6,30 @@
     <title>어디냥 | 메인화면</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="icon" href="static/favicon.png">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 각 버튼에 대한 참조를 가져옵니다.
+            var startButton = document.getElementById('startButton');
+            var yourButton = document.getElementById('yourButton');
+            var locationButton = document.getElementById('locationButton');
+
+            // 'imageContainer' div에 대한 참조를 가져옵니다.
+            var imageContainer = document.getElementById('imageContainer');
+
+
+            // '너의' 버튼 클릭 이벤트 리스너
+            yourButton.addEventListener('click', function () {
+                imageContainer.style.backgroundImage = "url('/static/뚱냥이.png')";
+            });
+
+            // '위치는?' 버튼 클릭 이벤트 리스너
+            locationButton.addEventListener('click', function () {
+                imageContainer.style.backgroundImage = "url('/static/cat.jpeg')";
+            });
+        });
+
+    </script>
 </head>
 
 <body>
@@ -20,9 +44,12 @@
         </div>
     </section>
     <section class="section is-medium">
-        <div
-            style="background-image: url('/static/뚱냥이.png');height: 400px; width: 400px; background-size: contain;background-repeat: no-repeat; background-position: center;">
-            <a class="button" href="/login/form">시작하기</a>
+        <a class="button is-link" id="startButton" href="/login/form">시작하기</a>
+        <a class="button is-info" id="yourButton">너의</a>
+        <a class="button is-success" id="locationButton">위치는?</a>
+        <div id="imageContainer"
+            style="height: 400px; width: 400px; background-size: contain; background-repeat: no-repeat; background-position: center;">
+
         </div>
 
 
@@ -30,9 +57,8 @@
     <footer class="footer">
         <div class="content has-text-left">
             <p>
-                <strong>"어디냥..."</strong> by 김세연, 최상욱, 황교준 from Krafton Jungle. The source code is licensed
-                <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
-                is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+                <strong>"어디냥..."</strong> by 김세연, 최상욱, 황교준 from Krafton Jungle.
+
             </p>
         </div>
     </footer>
