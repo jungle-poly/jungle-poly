@@ -27,6 +27,19 @@ db = client.meow
 def home():
     return render_template('index.html')
 
+@app.route('/verify-token')
+@jwt_required(optional=True)
+def verify_token():
+    current_user = get_jwt_identity()
+    if not current_user:
+        return jsonify({'status':'fail', 'message': '토큰값이 비어있음'}), 403
+    
+    return jsonify(
+        status = "success",
+        message = "사용자 인증 성공"
+    )
+
+
 # 로그인 폼 화면
 @app.route('/login/form')
 def login():
@@ -98,7 +111,7 @@ def signup():
 def update_state():
     current_user = get_jwt_identity()
     if not current_user:
-        return jsonify({'status':'fail', 'message': '토큰값이 비어있음'})
+        return jsonify({'status':'fail', 'message': '토큰값이 비어있음'}), 403
 
     location = request.form['location']
     cat_image_url = request.form['cat_image_url']
@@ -125,7 +138,7 @@ def show_student_page():
 def get_student_states():
     current_user = get_jwt_identity()
     if not current_user:
-        return jsonify({'status':'fail', 'message': '토큰값이 비어있음'})
+        return jsonify({'status':'fail', 'message': '토큰값이 비어있음'}), 403
 
     students = list(db.student.find({}, {'_id': 0, 'pw': 0}))
 
@@ -147,12 +160,13 @@ def get_student_states():
 def show_recent_states():
     current_user = get_jwt_identity()
     if not current_user:
-        return jsonify({'status':'fail', 'message': '토큰값이 비어있음'})
+        return jsonify({'status':'fail', 'message': '토큰값이 비어있음'}), 403
 
     # todo: 정렬조건 추가해야 함
     other_students = db.student.find({'id': {"$ne": current_user}}, {'_id': 0, 'pw': 0, 'id': 0})
 
-    return jsonify({'status': 'success', 'data': list(other_students)})
+    # return jsonify({'status': 'success', 'data': list(other_students)})
+    return render_template('show_others_data.html', data=list(other_students))
 
 # 회원가입 정보 유효성 검사
 def validate_student_info(student):
@@ -188,12 +202,12 @@ def validate_student_info(student):
 # 만료된 토큰 에러 콜백
 @jwt.expired_token_loader
 def expired_token_callback(jwt_header, jwt_payload):
-    return jsonify({'status': 'fail', 'message': '토큰이 만료되었습니다.'}), 401
+    return jsonify({'status': 'fail', 'message': '토큰이 만료되었습니다.'}), 403
 
 # 유효하지 않은 토큰 에러 콜백 
 @jwt.invalid_token_loader
 def invalid_token_callback(error_string):
-    return jsonify({'status': 'fail', 'message': '유효하지 않은 토큰입니다.', 'error': error_string}), 422
+    return jsonify({'status': 'fail', 'message': '유효하지 않은 토큰입니다.', 'error': error_string}), 403
 
 if __name__ == '__main__':
     # app.run('0.0.0.0', port=5000, debug=True)
