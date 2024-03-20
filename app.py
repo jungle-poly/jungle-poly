@@ -139,7 +139,6 @@ def get_student_states():
         'my_profile': my_profile,
         'other_students': other_students
     }
-    
     return render_template('show_profile_data.html', data=data)
 
 # 수강생 최신 상태정보 조회
@@ -197,4 +196,5 @@ def invalid_token_callback(error_string):
     return jsonify({'status': 'fail', 'message': '유효하지 않은 토큰입니다.', 'error': error_string}), 422
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    # app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5001, debug=True)
