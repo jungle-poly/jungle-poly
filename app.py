@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify, request, make_response
 from flask_jwt_extended import*
 import requests
 import re
@@ -134,7 +134,6 @@ def update_state():
 
 @app.route('/state', methods=['GET'])
 def show_student_page():
-    print('렌더링')
     return render_template('show_profile.html')
 
 locations = [["'classroom'","강의실"],["'lounge'","라운지"],["'dormitory'","기숙사"]
@@ -173,7 +172,17 @@ def get_student_states():
         'other_students': other_students,
         'locations_to_select':findLocToSelect(my_profile["location"])
     }
-    return render_template('show_profile_data.html', data=data)
+
+    html_content = render_template('show_profile_data.html', data=data)
+    
+    # 응답 객체 생성 및 캐시 제어 헤더 설정
+    response = make_response(html_content)
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, post-check=0, pre-check=0, max-age=0'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    
+    return response
+    # return render_template('show_profile_data.html', data=data)
 
 # 수강생 최신 상태정보 조회
 @app.route('/state/others/renew', methods=['GET'])
