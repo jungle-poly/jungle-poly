@@ -5,7 +5,7 @@ import re
 from pymongo import MongoClient, DESCENDING
 import conf 
 from flask import redirect,url_for
-
+import pymongo
 #todo: 리프레쉬 토큰 여력이 되면 구현
 
 app = Flask(__name__)
@@ -102,8 +102,11 @@ def signup():
     if (validate_student_info(studentInfo) == False):
         return jsonify({'status': 'fail', 'message': '유효성 검사 실패. 입력하신 정보를 다시 확인해주세요'})        
 
-    db.student.insert_one(studentInfo)
-
+    try:
+        db.student.insert_one(studentInfo)
+    except pymongo.errors.DuplicateKeyError:
+        return jsonify({'status': 'fail', 'message': '유효성 검사 실패. 입력하신 정보를 다시 확인해주세요'})
+    
     return jsonify({'status': 'success', 'message': '회원가입에 성공하였습니다.'})
 
 
