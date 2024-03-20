@@ -3,6 +3,7 @@ from flask_jwt_extended import*
 import requests
 import re
 from pymongo import MongoClient, DESCENDING
+import conf 
 
 #todo: 리프레쉬 토큰 여력이 되면 구현
 
@@ -15,7 +16,9 @@ app.config.update(
 
 jwt = JWTManager(app)
 
-client = MongoClient('mongodb://test:test@52.79.113.253', 27017)
+url = conf.url
+client = MongoClient(conf.dbUrl, conf.dbPort)
+
 db = client.meow
 
 # 인덱스 페이지
