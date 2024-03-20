@@ -194,9 +194,8 @@ def show_recent_states():
 
     # todo: 정렬조건 추가해야 함
     other_students = db.student.find({'id': {"$ne": current_user}}, {'_id': 0, 'pw': 0, 'id': 0})
-
-    # return jsonify({'status': 'success', 'data': list(other_students)})
-    return render_template('show_others_data.html', data=list(other_students))
+        
+    return render_template('show_others_data.html', data=other_students)
 
 # 회원가입 정보 유효성 검사
 def validate_student_info(student):
