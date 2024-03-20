@@ -29,6 +29,7 @@
             },
             success: function(response) {
                 document.querySelector('#container').innerHTML = response;
+                setModalState();
             },
             error: function(response) {
                 if (response.status == '422') {
@@ -38,6 +39,9 @@
             }
         })
 
+    });
+
+    function setModalState() {
         // Functions to open and close a modal
         function openModal($el) {
             $el.classList.add('is-active');
@@ -78,7 +82,9 @@
                 closeAllModals();
             }
         });
-    });
+
+
+    }
 </script>
 
 </html>
