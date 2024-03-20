@@ -50,7 +50,7 @@ def login_proc():
         )
     else : 
         return jsonify(
-            status = "fail",            
+            status = "fail",
             message = "존재하지 않는 아이디 혹은 비밀번호 오류"
         )
     
@@ -62,12 +62,12 @@ def show_signup_form():
 # 회원 등록
 @app.route('/signup', methods=['POST'])
 def signup():    
-    random_cat_api = 'https://cataas.com/cat?json=true'
+    random_cat_api = 'https://api.thecatapi.com/v1/images/search'
     headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 
     api_result = requests.get(random_cat_api, headers=headers).json()
-    cat_id = api_result['_id']
-    cat_image_url = 'https://cataas.com/cat?id=' + cat_id
+    cat_image_url = api_result[0]['url']
+    
 
     id = request.form['id']
     pw = request.form['password']
@@ -139,7 +139,6 @@ def get_student_states():
         'my_profile': my_profile,
         'other_students': other_students
     }
-    
     return render_template('show_profile_data.html', data=data)
 
 # 수강생 최신 상태정보 조회
@@ -197,4 +196,5 @@ def invalid_token_callback(error_string):
     return jsonify({'status': 'fail', 'message': '유효하지 않은 토큰입니다.', 'error': error_string}), 422
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    # app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5001, debug=True)
