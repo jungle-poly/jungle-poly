@@ -22,7 +22,7 @@
 
       $.ajax({
           type : "POST",
-          url : "/signup",
+          url : "/login",
           data: {"id":id,"pw":pw},
           success: function(response){
               if(response["result"]=="success"){
