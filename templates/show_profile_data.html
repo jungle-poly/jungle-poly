@@ -79,14 +79,21 @@
                 </div>
                 <div class="column">
                     <div class="tags has-addons">
-                        <span class="tag is-dark">상태</span>
+                        <span class="tag is-dark">상태</span>                                    
                         {% if item.location == "undefined" %}
                             <span class="tag is-info">미정</span>
-                        {% elif item.location == "gym" %}
-                            <span class="tag is-info">헬스장</span>
+                        {% elif item.location == "classroom" %}
+                            <span class="tag is-info">강의실</span>
+                        {% elif item.location == "dormitory" %}
+                            <span class="tag is-info">기숙사</span>
                         {% elif item.location == "restaurant" %}
-                            <span class="tag is-info">레스토랑</span>
-
+                            <span class="tag is-info">식당</span>
+                        {% elif item.location == "laundry_room" %}
+                            <span class="tag is-info">세탁실</span>
+                        {% elif item.location == "out" %}
+                            <span class="tag is-info">외출중</span>
+                        {% elif item.location == "lounge" %}
+                            <span class="tag is-info">라운지</span>
                         {% endif %}                        
                     </div>
                 </div>
@@ -137,7 +144,21 @@
                     <div class="control">
                         <div class="tags has-addons">
                             <span class="tag is-dark">위치</span>
-                            <span class="tag is-info">{{data.my_profile.location}}</span>
+                            {% if data.my_profile.location == "undefined" %}
+                                <span class="tag is-info">미정</span>
+                            {% elif data.my_profile.location == "classroom" %}
+                                <span class="tag is-info">강의실</span>
+                            {% elif data.my_profile.location == "dormitory" %}
+                                <span class="tag is-info">기숙사</span>
+                            {% elif data.my_profile.location == "restaurant" %}
+                                <span class="tag is-info">식당</span>
+                            {% elif data.my_profile.location == "laundry_room" %}
+                                <span class="tag is-info">세탁실</span>
+                            {% elif data.my_profile.location == "out" %}
+                                <span class="tag is-info">외출중</span>
+                            {% elif data.my_profile.location == "lounge" %}
+                                <span class="tag is-info">라운지</span>
+                            {% endif %}                        
                         </div>
                     </div>
                 </div>
