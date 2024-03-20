@@ -82,11 +82,12 @@
                         <span class="tag is-dark">상태</span>
                         {% if item.location == "undefined" %}
                             <span class="tag is-info">미정</span>
-                        {% elif item.location == "gym" %}
+                        <!-- {% elif item.location == "gym" %}
                             <span class="tag is-info">헬스장</span>
                         {% elif item.location == "restaurant" %}
-                            <span class="tag is-info">레스토랑</span>
-
+                            <span class="tag is-info">레스토랑</span> -->
+                        {% else %}
+                            <span class = "tag is-info">{{item.location}}</span>
                         {% endif %}                        
                     </div>
                 </div>
