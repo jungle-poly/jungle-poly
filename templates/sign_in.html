@@ -12,29 +12,56 @@
 
   <!-- JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-      crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+
 
   <script>
-    function signIn(){
+    $(document).ready(function () {
+      var jwt = localStorage.getItem('access_token'); // JWT를 로컬 스토리지에서 가져옵니다.
+      if (jwt) {
+        // 서버에 JWT 유효성 검사 요청
+        $.ajax({
+          url: '/verify-token', // JWT 유효성 검사를 위한 서버의 URL
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + jwt
+          },
+          success: function (response) {
+            // JWT가 유효한 경우,
+            if (response.status == "success") {
+              window.location.href = '/state'; 
+            }
+            console.log(response);
+          },
+          error: function () {
+            // 오류 처리 (예: JWT가 유효하지 않음)
+            
+            localStorage.removeItem("access_token");
+          }
+        });
+      }
+    });
+    function signIn() {
       let id = $("#id").val();
       let pw = $("#pw").val();
 
       $.ajax({
-          type : "POST",
-          url : "/login",
-          data: {"id":id,"pw":pw},
-          success: function(response){
-              if(response["status"]=="success"){
-                  localStorage.setItem("access_token",response["data"])
-                  location.href = "/state"
-              }
-              else{
-                  alert("로그인 실패");
-              }
+        type: "POST",
+        url: "/login",
+        data: { "id": id, "pw": pw },
+        success: function (response) {
+          if (response["status"] == "success") {
+            localStorage.setItem("access_token", response["data"])
+            location.href = "/state"
           }
+          else {
+            alert("로그인 실패");
+          }
+        }
       })
     }
+
+
   </script>
 
 </head>
@@ -57,7 +84,7 @@
       <div class="field">
         <label class="label">I.D</label>
         <div class="control">
-          <input class="input" id ="id" type="text" placeholder="누구냐옹">
+          <input class="input" id="id" type="text" placeholder="누구냐옹">
         </div>
       </div>
 

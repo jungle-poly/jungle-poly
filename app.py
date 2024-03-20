@@ -27,6 +27,7 @@ db = client.meow
 def home():
     return render_template('index.html')
 
+# 사용자 인증
 @app.route('/verify-token')
 @jwt_required(optional=True)
 def verify_token():
