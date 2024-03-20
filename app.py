@@ -50,7 +50,7 @@ def login_proc():
         )
     else : 
         return jsonify(
-            status = "fail",            
+            status = "fail",
             message = "존재하지 않는 아이디 혹은 비밀번호 오류"
         )
     
