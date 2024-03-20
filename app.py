@@ -101,7 +101,7 @@ def update_state():
         return jsonify({'status':'fail', 'message': '토큰값이 비어있음'})
 
     location = request.form['location']
-    cat_image_url = request.form['catImageUrl']
+    cat_image_url = request.form['cat_image_url']
 
     update_data = {}
 
