@@ -39,6 +39,7 @@
                 },
                 success: function(response){
                     alert("프로필 수정완료!");
+                    location.href = "/state"
                 },
                 error: function(response) {
                     if (response.status == '422') {
