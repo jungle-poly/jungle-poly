@@ -1,0 +1,231 @@
+<section class="hero is-small is-primary">
+    <div class="hero-body">
+        <p class="title">
+            어디냥
+        </p>
+        <p class="subtitle">
+            정글러들의 현황
+        </p>
+    </div>
+</section>
+
+<section class="section" id="user_profile">
+    <h1 class="title">나의 프로필</h1>
+    <!-- 나의 프로필 영역 -->
+    <div>
+        <div class="columns is-mobile" id="user_info">
+            <!-- 프로필 이미지 -->
+            <div class="column">
+                <figure class="image is-96x96">
+                    <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png">
+                </figure>
+            </div>
+            <div class="column is-two-thirds tags are-normal">
+                <!-- 이름 -->
+                <div class="block">
+                    <div class="tags has-addons">
+                        <span class="tag is-dark">이름</span>
+                        <span class="tag is-info">이름을 쓰는 공간 -> jinja 로 처리</span>
+                    </div>
+                </div>
+
+                <!-- 상태 -->
+                <div class="control">
+                    <div class="tags has-addons">
+                        <span class="tag is-dark">상태</span>
+                        <span class="tag is-info">상태를 쓰는 공간 -> jinja 로 처리</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 나의 프로필 변경 페이지를 뜨게 하는 버튼 -->
+        <button class="button is-primary js-modal-trigger" data-target="update_user_profile">
+            나의 프로필 변경하기
+        </button>
+    </div>
+
+</section>
+
+
+<!-- 프로필 간의 경계 -->
+<hr width="100%;" color="red" size="5">
+
+<section class="section" id="other_profiles">
+    <h1 class="title">다른 프로필들</h1>
+    <div id="사람1">
+        <div>
+            <div class="columns is-mobile" id="user_info">
+                <!-- 프로필 이미지 -->
+                <div class="column">
+                    <figure class="image is-96x96">
+                        <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png">
+                    </figure>
+                </div>
+                <div class="column">
+                    <!-- 이름 -->
+                    <div class="block">
+                        <div class="tags has-addons">
+                            <span class="tag is-dark">이름</span>
+                            <span class="tag is-info">이름을 쓰는 공간 -> jinja 로 처리</span>
+                        </div>
+                    </div>
+
+                    <!-- 상태 -->
+                    <div class="control">
+
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="tags has-addons">
+                        <span class="tag is-dark">상태</span>
+                        <span class="tag is-info">상태를 쓰는 공간 -> jinja 로 처리</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="사람2">
+        <div>
+            <div class="columns is-mobile" id="user_info">
+                <!-- 프로필 이미지 -->
+                <div class="column">
+                    <figure class="image is-96x96">
+                        <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png">
+                    </figure>
+                </div>
+                <div class="column">
+                    <!-- 이름 -->
+                    <div class="block">
+                        <div class="tags has-addons">
+                            <span class="tag is-dark">이름</span>
+                            <span class="tag is-info">이름을 쓰는 공간 -> jinja 로 처리</span>
+                        </div>
+                    </div>
+
+                    <!-- 상태 -->
+                    <div class="control">
+
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="tags has-addons">
+                        <span class="tag is-dark">상태</span>
+                        <span class="tag is-info">상태를 쓰는 공간 -> jinja 로 처리</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="사람3">
+        <div>
+            <div class="columns is-mobile" id="user_info">
+                <!-- 프로필 이미지 -->
+                <div class="column">
+                    <figure class="image is-96x96">
+                        <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png">
+                    </figure>
+                </div>
+                <div class="column">
+                    <!-- 이름 -->
+                    <div class="block">
+                        <div class="tags has-addons">
+                            <span class="tag is-dark">이름</span>
+                            <span class="tag is-info">이름을 쓰는 공간 -> jinja 로 처리</span>
+                        </div>
+                    </div>
+
+                    <!-- 상태 -->
+                    <div class="control">
+
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="tags has-addons">
+                        <span class="tag is-dark">상태</span>
+                        <span class="tag is-info">상태를 쓰는 공간 -> jinja 로 처리</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="content has-text-left">
+        <p>
+            <strong>"어디냥..."</strong> by 김세연, 최상욱, 황교준 from Krafton Jungle. The source code is licensed
+            <a href="http://opensource.org/licenses/mit-license.php">MIT</a>. The website content
+            is licensed <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>.
+        </p>
+    </div>
+</footer>
+
+
+<!-- 팝업  -->
+<div class="modal" id="update_user_profile">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">사용자 프로필 수정 화면</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <div class="columns is-mobile" id="user_info">
+                <!-- 프로필 이미지 -->
+                <div class="column">
+                    <figure class="image is-96x96">
+                        <img class="is-rounded" src="https://bulma.io/images/placeholders/96x96.png">
+                    </figure>
+                </div>
+                <div class="column is-two-thirds tags are-normal">
+                    <!-- 이름 -->
+                    <div class="block">
+                        <div class="tags has-addons">
+                            <span class="tag is-dark">이름</span>
+                            <span class="tag is-info">김고양</span>
+                        </div>
+                    </div>
+
+                    <!-- 상태 -->
+                    <div class="control">
+                        <div class="tags has-addons">
+                            <span class="tag is-dark">위치</span>
+                            <span class="tag is-info">강의실</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div>
+                <!-- 표시이름 + 표시이름 변경 박스 -->
+
+
+                <!-- 현재위치 + 현재위치 선택 박스 -->
+                <div>
+                    <span class="tag is-info">나의 위치를 알려줘!</span>
+                    <div class="select">
+                        <select>
+                            <option>강의실</option>
+                            <option>라운지</option>
+                            <option>기숙사</option>
+                            <option>식당</option>
+                            <option>세탁실</option>
+                            <option>외출중</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <!-- 랜덤고양이 + 랜던고양이 뽑기 버튼 -->
+                    <span class="tag is-info">프로필 바꾸기</span>
+                    <button class="button is-success">고양이를 바꿔라!</button>
+                </div>
+            </div>
+        </section>
+        <footer class="modal-card-foot">
+            <button class="button is-success">수정하기</button>
+            <button class="button">취소하기</button>
+        </footer>
+    </div>
+</div>

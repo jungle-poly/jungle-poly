@@ -42,7 +42,7 @@ def login_proc():
 
     if(user_pw== user_data['pw']):
         #todo: 조금 더 보안을 강화하고 싶다면 user_id를 단방향으로 암호화해서 identity 설정
-        access_token = create_access_token(identity=user_id,expires_delta=False,additional_claims={"id":user_id})
+        access_token = create_access_token(identity=user_id,expires_delta=False)
         
         return jsonify(
             status = "success",
@@ -140,7 +140,7 @@ def get_student_states():
         'other_students': other_students
     }
     
-    return render_template('student_states.html', data=data)
+    return render_template('show_profile_data.html', data=data)
 
 # 수강생 최신 상태정보 조회
 @app.route('/state/others/renew', methods=['GET'])
