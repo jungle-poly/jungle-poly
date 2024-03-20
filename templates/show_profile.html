@@ -97,7 +97,7 @@
                     xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                 },
                 success: function(response){      
-                    const section = document.querySelector('#container #other_profiles div');
+                    const section = document.querySelector('#container #other_profiles #list_box');
                     section.innerHTML = response;
                 },
                 error: function(response) {
