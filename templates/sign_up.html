@@ -20,7 +20,7 @@
             <div class="container">
                 <div class="columns is-centered">
                     <div class="column is-5-tablet is-4-desktop is-3-widescreen">
-                        <form class="box">
+                        <form class="box" id="signup-form">
                             <!-- 아이디 -->
                             <div class="field">
                                 <label for="" class="label">아이디</label>
@@ -78,7 +78,7 @@
                             <div class="field">
                                 <label for="" class="label">전화번호</label>
                                 <div class="control has-icons-left">
-                                    <input name="phone" type="email" placeholder="e.g. : 010-1234-5678" class="input" >
+                                    <input name="phone" type="email" placeholder="e.g. : 01012345678" class="input" >
                                     <span class="icon is-small is-left">
                                         <i class="fa fa-envelope"></i>
                                     </span>
@@ -111,6 +111,11 @@
     </footer>
 </body>
 <script>
+    const form = document.querySelector('#signup-form');
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+    });
+
     const signupBtn = document.querySelector('#signup-btn');
     signupBtn.addEventListener('click', () => {
         // todo: bulma 기본 유효성 외 앞단 유효성 검사 필요
@@ -129,7 +134,8 @@
                     alert('회원가입에 실패하였습니다.')
                     return;
                 }
-                location.href = '/login'
+                alert('회원가입 성공!');
+                location.href = '/login/form';
             },
         })
 

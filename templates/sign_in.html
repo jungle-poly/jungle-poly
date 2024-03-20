@@ -47,7 +47,7 @@
           <button class="button is-link">로그인</button>
         </div>
         <div class="control">
-          <button class="button is-link is-light">회원가입</button>
+          <button class="button is-link is-light" id="to-signup">회원가입</button>
         </div>
       </div>
 
@@ -66,5 +66,13 @@
     </div>
   </footer>
 </body>
+
+<script>
+  const toSignupBtn = document.querySelector('#to-signup');
+  toSignupBtn.addEventListener('click', () => {
+    location.href = '/signup/form';
+  });
+
+</script>
 
 </html>
