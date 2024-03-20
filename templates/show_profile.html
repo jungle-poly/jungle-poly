@@ -70,7 +70,7 @@
             },
             success: function (response) {
                 document.querySelector('#container').innerHTML = response;
-                setModalState();
+                afterRendering();
             },
             error: function (response) {
                 if (response.status == '403') {
@@ -82,7 +82,36 @@
 
     });
 
-    // 프로필 수정 로직
+    function afterRendering() {
+        addRenewalEvent();
+        setModalState();
+
+    }
+
+    function addRenewalEvent() {
+        const renewBtn = document.querySelector('#renew-data-btn')
+        renewBtn.addEventListener('click', () => {
+            $.ajax({
+                type : "GET",
+                url : "/state/others/renew",
+                data: {},
+                beforeSend: function(xhr) {
+                    const token = localStorage.getItem('access_token');
+                    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                },
+                success: function(response){
+                    console.log('리스폰스 -> ', response);
+                },
+                error: function(response) {
+                    if (response.status == '403') {
+                        alert('403 에러');
+                    }
+                }
+            })
+
+        });
+    }
+
     function setModalState() {
         // Functions to open and close a modal
         function openModal($el) {
