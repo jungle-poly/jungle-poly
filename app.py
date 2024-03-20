@@ -92,6 +92,7 @@ def signup():
 
     return jsonify({'status': 'success', 'message': '회원가입에 성공하였습니다.'})
 
+
 # 내 상태 변경
 @app.route('/state/update', methods=['POST'])
 @jwt_required(optional=True)
@@ -119,6 +120,20 @@ def show_student_page():
     print('렌더링')
     return render_template('show_profile.html')
 
+locations = [["'classroom'","강의실"],["'lounge'","라운지"],["'dormitory'","기숙사"]
+             ,["'restaurant'","식당"],["'laundry_room'","세탁실"],["'out'","외출중"]]
+
+def findLocToSelect(loc):
+    locToSelect = []
+    locIdx = 0
+    for i in range(0,len(locations)):
+        if(locations[i][1]==loc):
+            locToSelect.insert(0,locations[i])
+        else:
+            locToSelect.append(locations[i])
+
+    return locToSelect
+        
 # 전체 수강생 상태 조회
 @app.route('/state/list', methods=['GET'])
 @jwt_required(optional=True)
@@ -134,10 +149,12 @@ def get_student_states():
 
     # 다른 학생 정보
     other_students = [item for item in students if item['id'] != current_user]
+    print(findLocToSelect(my_profile["location"]))
 
     data = {
         'my_profile': my_profile,
-        'other_students': other_students
+        'other_students': other_students,
+        'locations_to_select':findLocToSelect(my_profile["location"])
     }
     return render_template('show_profile_data.html', data=data)
 

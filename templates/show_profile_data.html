@@ -147,12 +147,9 @@
                     <span class="tag is-info">나의 위치를 알려줘!</span>
                     <div class="select">
                         <select id="loc_select">
-                            <option value ="classroom">강의실</option>
-                            <option value="lounge">라운지</option>
-                            <option value="dormitory">기숙사</option>
-                            <option value="restaurant">식당</option>
-                            <option value="laundry_room">세탁실</option>
-                            <option value="out">외출중</option>
+                            {% for location in data.locations_to_select %}
+                            <option value={{location[0]}}>{{location[1]}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                 </div>
