@@ -10,12 +10,14 @@ app = Flask(__name__)
 
 app.config.update(
     DEBUG = True,
-    JWT_SECRET_KEY = "HIII",
+    JWT_SECRET_KEY = "HIII", #todo 키값은 외부로 노출하면 안 됨.
 )
 
 jwt = JWTManager(app)
 
 client = MongoClient('mongodb://test:test@52.79.113.253', 27017)
+# client = MongoClient('localhost', 27017)
+
 db = client.meow
 
 # 인덱스 페이지
@@ -53,11 +55,11 @@ def login_proc():
 # 회원가입 폼 조회
 @app.route('/signup/form', methods=['GET'])
 def show_signup_form():
-    return render_template('signup_form.html')
+    return render_template('sign_up.html')
 
 # 회원 등록
 @app.route('/signup', methods=['POST'])
-def signup():
+def signup():    
     random_cat_api = 'https://cataas.com/cat?json=true'
     headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 
