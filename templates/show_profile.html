@@ -96,12 +96,13 @@
                     const token = localStorage.getItem('access_token');
                     xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                 },
-                success: function(response){
-                    console.log('리스폰스 -> ', response);
+                success: function(response){      
+                    const section = document.querySelector('#container #other_profiles #list_box');
+                    section.innerHTML = response;
                 },
                 error: function(response) {
                     if (response.status == '403') {
-                        alert('403 에러');
+                        location.href = '/login/form';
                     }
                 }
             })
