@@ -88,7 +88,7 @@
                                 <button type="button" class="button is-success" id="signup-btn">
                                     가입하기
                                 </button>
-                                <button type="button" class="button is-success" id="cancel-btn">
+                                <button type="button" class="button is-success" id="cancel-btn" onclick="go_to_main()">
                                     돌아가기
                                 </button>
                             </div>
@@ -139,6 +139,10 @@
         })
 
     });
+
+    function go_to_main(){
+        location.href = '/login/form';
+    }
 
 </script>
 
