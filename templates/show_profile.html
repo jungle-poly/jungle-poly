@@ -88,6 +88,11 @@
     function addRenewalEvent() {
         const renewBtn = document.querySelector('#renew-data-btn')
         renewBtn.addEventListener('click', () => {
+            
+            const loadingComponent = document.querySelector('#loading')
+            renewBtn.classList.add('is-hidden');
+            loadingComponent.classList.remove('is-hidden');
+
             $.ajax({
                 type : "GET",
                 url : "/state/others/renew",
@@ -96,7 +101,10 @@
                     const token = localStorage.getItem('access_token');
                     xhr.setRequestHeader('Authorization', 'Bearer ' + token);
                 },
-                success: function(response){      
+                success: function(response){                          
+                    renewBtn.classList.remove('is-hidden');
+                    loadingComponent.classList.add('is-hidden');
+
                     const section = document.querySelector('#container #other_profiles #list_box');
                     section.innerHTML = response;
                 },
