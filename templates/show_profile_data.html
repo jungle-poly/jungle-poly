@@ -121,9 +121,12 @@
             <div class="columns is-mobile" id="user_info">
                 <!-- 프로필 이미지 -->
                 <div class="column">
-                    <figure class="image is-96x96">
+                    <figure class="image is-96x96" id="real-img">
                         <img style="width: 96px;height: 96px;" id="profile_img" class="is-rounded" src= {{ data.my_profile.cat_image_url }}>
                     </figure>
+                    <figure class="image is-96x96 is-hidden" id="skeleton-img">
+                        <img class="is-rounded" style="width: 96px; height:96px;" src="/static/back-gray.JPG" >
+                    </figure>    
                 </div>
                 <div class="column is-two-thirds tags are-normal">
                     <!-- 이름 -->
@@ -168,7 +171,7 @@
             </div>
         </section>
         <footer class="modal-card-foot">
-            <button class="button is-success" onclick = "change()">수정하기</button>
+            <button id="change-btn" class="button is-success" onclick = "change()" disabled>수정하기</button>
             <button class="button">취소하기</button>
         </footer>
     </div>
