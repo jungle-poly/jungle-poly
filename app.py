@@ -52,18 +52,28 @@ def login():
 def login_proc():
     user_id = request.form["id"]
     user_pw = request.form["pw"]
+    
+    user_data = db.student.find_one({'id': user_id}, {'pw': 1})
+    if user_data is None:
+        return jsonify(
+            status = "fail",
+            message = "존재하지 않는 아이디입니다."
+        )
 
-    user_data = db.student.find_one({"id": user_id}, {"pw": 1})
-
-    if user_pw == user_data["pw"]:
-        # todo: 조금 더 보안을 강화하고 싶다면 user_id를 단방향으로 암호화해서 identity 설정
-        access_token = create_access_token(identity=user_id, expires_delta=False)
-
-        return jsonify(status="success", data=access_token)
-    else:
-        return jsonify(status="fail", message="존재하지 않는 아이디 혹은 비밀번호 오류")
-
-
+    if(user_pw== user_data['pw']):
+        #todo: 조금 더 보안을 강화하고 싶다면 user_id를 단방향으로 암호화해서 identity 설정
+        access_token = create_access_token(identity=user_id,expires_delta=False)
+        
+        return jsonify(
+            status = "success",
+            data = access_token
+        )
+    else : 
+        return jsonify(
+            status = "fail",
+            message = "비밀번호가 일치하지 않습니다."
+        )
+    
 # 회원가입 폼 조회
 @app.route("/signup/form", methods=["GET"])
 def show_signup_form():
