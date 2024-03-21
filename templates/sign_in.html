@@ -46,6 +46,15 @@
       let id = $("#id").val();
       let pw = $("#pw").val();
 
+      if (!id.trim()) {
+          alert('아이디를 입력해주세요.');
+          return;
+      }
+      if (!pw) {
+          alert('비밀번호를 입력해주세요.');
+          return;
+      }
+
       $.ajax({
         type: "POST",
         url: "/login",
@@ -56,7 +65,7 @@
             location.href = "/state"
           }
           else {
-            alert("로그인 실패");
+            alert(response.message);
           }
         }
       })
