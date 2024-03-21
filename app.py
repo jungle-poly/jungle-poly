@@ -211,6 +211,7 @@ def get_student_states():
         "my_profile": my_profile,
         "other_students": other_students,
         "locations_to_select": findLocToSelect(my_profile["location"]),
+        "my_location": location_to_colors[my_profile["location"]]
     }
 
     html_content = render_template("show_profile_data.html", data=data)
